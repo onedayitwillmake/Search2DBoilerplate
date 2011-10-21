@@ -41,7 +41,7 @@ public class Agent {
 			
 			if( aState.getSquare() == null ) continue; // Invalid state - 
 			if( _sequence.containsState( aState ) ) continue; // Already in sequence;
-			
+			if( !aState.getSquare().isPermutable() ) continue;
 			aState.getSquare()._color = 255;
 			_sequence.pushState( aState );
 			break;

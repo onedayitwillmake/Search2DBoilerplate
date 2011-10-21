@@ -9,6 +9,7 @@ public class GridSquare {
 	public int				_size;
 	public PVector			_center;
 	
+	private boolean			_isPermutable;
 	// Color
 	public int				 _color;
 	
@@ -20,8 +21,8 @@ public class GridSquare {
 		_gridPosition = new PVector(row, column);
 		_size = size;
 		_center = new PVector(_position.x + _size/2, _position.y + _size/2);
-		
-		
+		_color = 90;
+		_isPermutable = true;
 		app = appRef;
 	}	
 	
@@ -29,4 +30,6 @@ public class GridSquare {
 		app.fill( _color );
 		app.rect(_position.x, _position.y, _position.x+_size, _position.y+_size);
 	}
-}
+
+	public void setPermutable(boolean isPermutable) { _isPermutable = isPermutable; }
+	public boolean isPermutable() { return _isPermutable; }}

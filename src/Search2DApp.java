@@ -28,6 +28,14 @@ public class Search2DApp extends PApplet {
 		GridSquare goalSquare = _gridModel.getSquareAtPixelPosition( width / 2, height / 2 );
 		goalSquare._color = 128;
 		
+		// Randomly make some not passable
+		for (GridSquare square : _gridModel.get_gridSquareList()) {
+			if( random(1) < 0.25 && square != goalSquare && square != initialState ) {
+				square.setPermutable( false );
+				square._color = 0;
+			}
+		}
+		
 		_agent = new Agent( new State(initialState, _gridModel), new State(goalSquare, _gridModel), _gridModel );
 	}
 
