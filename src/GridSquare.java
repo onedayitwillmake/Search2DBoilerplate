@@ -10,7 +10,7 @@ public class GridSquare {
 	public PVector			_center;
 	
 	// Color
-	public int				 _color = 128;
+	public int				 _color;
 	
 	// Reference to Processing
 	private PApplet			app;
@@ -21,7 +21,10 @@ public class GridSquare {
 		_size = size;
 		_center = new PVector(_position.x + _size/2, _position.y + _size/2);
 		
+		
 		app = appRef;
+		
+		_color = (int)app.random(255);
 	}	
 	
 	public void draw() {

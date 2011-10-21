@@ -40,8 +40,7 @@ public class GridModel {
 		for (int i = 0; i < _gridColumnCount; i++) {
 			for (int j = 0; j < _gridRowCount; j++) {
 				_gridSquares[i][j] = new GridSquare(i * _squareSize, j * _squareSize, i, j, (int) _squareSize, app);
-				_gridSquareList.add(_gridSquares[i][j]);
-				_gridSquares[i][j]._color = 255;
+				_gridSquareList.add( _gridSquares[i][j] );
 			}
 		}
 	}
