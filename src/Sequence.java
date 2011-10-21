@@ -6,7 +6,9 @@ import processing.core.PVector;
 public class Sequence {
 	private ArrayList<State> _stateSequence;
 	
-	public Sequence() {};
+	public Sequence() {
+		_stateSequence = new ArrayList<State>();
+	};
 	
 	public void pushState( State aState ) { _stateSequence.add( aState ); };
 	public State popState() { 
