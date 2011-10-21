@@ -46,16 +46,25 @@ public class GridModel {
 	}
 
 	/**
-	 * Returns the square located at xpos,ypos
-	 * 
+	 * Returns the square located at pixel position
 	 * @param xpos
 	 * @param ypos
 	 * @return
 	 */
-	public GridSquare getSquareAtPosition(int xpos, int ypos) {
+	public GridSquare getSquareAtPixelPosition(int xpos, int ypos) {
 		int column = PApplet.floor(xpos / _squareSize);
 		int row = PApplet.floor(ypos / _squareSize);
-
+		
+		return getSquareAtGridPosition(column, row);
+	}
+	
+	/**
+	 * Returns the square located at row, column
+	 * @param xpos
+	 * @param ypos
+	 * @return
+	 */
+	public GridSquare getSquareAtGridPosition(int column, int row) {
 		// Out of bounds
 		if (row < 0 || column < 0 || column >= _gridColumnCount || row >= _gridRowCount)
 			return null;

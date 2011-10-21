@@ -7,7 +7,7 @@ public class Search2DApp extends PApplet {
 
 	private float _elapsedFrames;
 	private GridModel _gridModel;
-
+	
 	public void setup() {
 		_elapsedFrames = 0;
 
@@ -16,6 +16,8 @@ public class Search2DApp extends PApplet {
 		background(0);
 
 		_gridModel = new GridModel(width, height, width / RESOLUTION, this);
+		
+		_gridModel.getSquareAtPixelPosition(1, 1);
 	}
 
 	@SuppressWarnings("unused")
