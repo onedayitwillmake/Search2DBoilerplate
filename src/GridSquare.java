@@ -23,8 +23,6 @@ public class GridSquare {
 		
 		
 		app = appRef;
-		
-		_color = (int)app.random(255);
 	}	
 	
 	public void draw() {

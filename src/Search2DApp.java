@@ -22,7 +22,8 @@ public class Search2DApp extends PApplet {
 	public void draw() {
 		++_elapsedFrames;
 		background(255);
-		noStroke();
+//		noStroke();
+		stroke( 128 );
 
 		for (GridSquare square : _gridModel.get_gridSquareList()) {
 			square.draw();
