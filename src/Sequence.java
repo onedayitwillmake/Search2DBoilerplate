@@ -18,6 +18,11 @@ public class Sequence {
 		return null;
 	}
 	
-	public void set_stateSequence(ArrayList<State> _stateSequence) { this._stateSequence = _stateSequence; }
-	public ArrayList<State> get_stateSequence() { return _stateSequence; }
+	///// ACCESSORS
+	public State getLastState() {
+		if ( !_stateSequence.isEmpty() ) {
+			return _stateSequence.get( _stateSequence.size() - 1 );
+		}
+		return null;
+	}
 }

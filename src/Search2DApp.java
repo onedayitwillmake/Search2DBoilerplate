@@ -3,7 +3,7 @@ import processing.core.*;
 
 public class Search2DApp extends PApplet {
 	private static final long serialVersionUID = -3824555102005090780L;
-	private static int RESOLUTION = 10;
+	private static int RESOLUTION = 30;
 	
 	private float _elapsedFrames;
 	
@@ -16,6 +16,8 @@ public class Search2DApp extends PApplet {
 		size(1200, 600);
 		frameRate(60);
 		background(0);
+		noStroke();
+		noSmooth();
 
 		_gridModel = new GridModel(width, height, width / RESOLUTION, this);
 		
@@ -30,15 +32,16 @@ public class Search2DApp extends PApplet {
 
 	public void update() {
 		++_elapsedFrames;
-		_agent.advance();
+		_agent.advance();		
 	}
 	
 	@SuppressWarnings("unused")
 	public void draw() {
 		update();
 		
+		
 		background(255);
-		stroke( 128 );
+//		stroke( 128 );
 		for (GridSquare square : _gridModel.get_gridSquareList()) {
 			square.draw();
 		}
