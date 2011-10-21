@@ -3,10 +3,12 @@ import processing.core.*;
 
 public class Search2DApp extends PApplet {
 	private static final long serialVersionUID = -3824555102005090780L;
-	private static int RESOLUTION = 20;
-
+	private static int RESOLUTION = 10;
+	
 	private float _elapsedFrames;
+	
 	private GridModel _gridModel;
+	private Agent _agent;
 	
 	public void setup() {
 		_elapsedFrames = 0;
@@ -17,16 +19,26 @@ public class Search2DApp extends PApplet {
 
 		_gridModel = new GridModel(width, height, width / RESOLUTION, this);
 		
-		_gridModel.getSquareAtPixelPosition(1, 1);
+		GridSquare initialState = _gridModel.getSquareAtGridPosition(0, 0);
+		initialState._color = 255;
+		
+		GridSquare goalSquare = _gridModel.getSquareAtPixelPosition( width - 1, height - 1);
+		goalSquare._color = 128;
+		
+		_agent = new Agent( new State(initialState, _gridModel), new State(initialState, _gridModel), _gridModel );
 	}
 
+	public void update() {
+		++_elapsedFrames;
+		_agent.advance();
+	}
+	
 	@SuppressWarnings("unused")
 	public void draw() {
-		++_elapsedFrames;
+		update();
+		
 		background(255);
-//		noStroke();
 		stroke( 128 );
-
 		for (GridSquare square : _gridModel.get_gridSquareList()) {
 			square.draw();
 		}
