@@ -9,7 +9,11 @@ public class State {
 		square = aSquare;
 		worldState = aWorldState;
 	}
-
+	
+	public boolean isEqual(State stateToCompare) {
+		return square == stateToCompare.getSquare();
+	}
+	
 	public GridSquare getSquare() { return square; }
 	public GridModel getWorldState() { return worldState; }
 }

@@ -25,4 +25,14 @@ public class Sequence {
 		}
 		return null;
 	}
+	
+	public Boolean containsState( State stateToCompare ) {
+		for (State aState : _stateSequence) {
+			if( aState.isEqual( stateToCompare ) ) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

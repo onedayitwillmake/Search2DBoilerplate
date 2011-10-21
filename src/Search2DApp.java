@@ -11,6 +11,7 @@ public class Search2DApp extends PApplet {
 	private Agent _agent;
 	
 	public void setup() {
+		INSTANCE = this;
 		_elapsedFrames = 0;
 
 		size(1200, 600);
@@ -24,10 +25,10 @@ public class Search2DApp extends PApplet {
 		GridSquare initialState = _gridModel.getSquareAtGridPosition(0, 0);
 		initialState._color = 255;
 		
-		GridSquare goalSquare = _gridModel.getSquareAtPixelPosition( width - 1, height - 1);
+		GridSquare goalSquare = _gridModel.getSquareAtPixelPosition( width / 2, height / 2 );
 		goalSquare._color = 128;
 		
-		_agent = new Agent( new State(initialState, _gridModel), new State(initialState, _gridModel), _gridModel );
+		_agent = new Agent( new State(initialState, _gridModel), new State(goalSquare, _gridModel), _gridModel );
 	}
 
 	public void update() {
@@ -41,7 +42,7 @@ public class Search2DApp extends PApplet {
 		
 		
 		background(255);
-//		stroke( 128 );
+		stroke( 128 );
 		for (GridSquare square : _gridModel.get_gridSquareList()) {
 			square.draw();
 		}
@@ -96,4 +97,9 @@ public class Search2DApp extends PApplet {
 	public static void main(String args[]) {
 		PApplet.main(new String[] { "--present", "Search2DApp.Search2DApp" });
 	}
+
+	private static PApplet INSTANCE;
+	public static PApplet getInstance() {
+		return Search2DApp.INSTANCE;
+	} 
 }
