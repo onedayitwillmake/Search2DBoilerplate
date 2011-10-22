@@ -1,13 +1,21 @@
+package oneday;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import processing.core.PApplet;
 import processing.core.PVector;
+import strategies.comparators.ManhattanDistanceComparator;
 
 public class Sequence {
 	private ArrayList<State> _stateSequence;
 	
 	public Sequence() {
 		_stateSequence = new ArrayList<State>();
+	};
+	
+	public void insertAtHead( State aState ) {
+		_stateSequence.add(0, aState);
 	};
 	
 	public void pushState( State aState ) { _stateSequence.add( aState ); };
@@ -35,4 +43,12 @@ public class Sequence {
 		
 		return false;
 	}
+
+	
+
+	public void sort( Comparator<State> aComparator) {
+		Collections.sort( _stateSequence, aComparator );
+	}
+	
+	public void clear() { _stateSequence.clear(); }
 }

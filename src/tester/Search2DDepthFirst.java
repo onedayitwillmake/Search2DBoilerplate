@@ -1,15 +1,26 @@
+package tester;
+
+import processing.core.PApplet;
+import processing.core.PVector;
+
 import java.util.ArrayList;
+
+import oneday.Agent;
+import oneday.GridModel;
+import oneday.GridSquare;
+import oneday.Search2DApp;
+import oneday.State;
 import processing.core.*;
 
-public class Search2DApp extends PApplet {
+
+public class Search2DDepthFirst extends PApplet {
 	private static final long serialVersionUID = -3824555102005090780L;
-	private static int RESOLUTION = 30;
+	private static int RESOLUTION = 50;
 	
 	private float _elapsedFrames;
 	
 	private GridModel _gridModel;
 	private Agent _agent;
-	
 	public void setup() {
 		INSTANCE = this;
 		_elapsedFrames = 0;
@@ -41,18 +52,27 @@ public class Search2DApp extends PApplet {
 
 	public void update() {
 		++_elapsedFrames;
-		_agent.advance();		
+		
+		for(int i = 0; i < 10; i++ ) {
+			_agent.advance();
+		}
 	}
 	
 	@SuppressWarnings("unused")
 	public void draw() {
 		update();
-		
-		
+			
 		background(255);
 		stroke( 128 );
 		for (GridSquare square : _gridModel.get_gridSquareList()) {
 			square.draw();
+		}
+		
+		GridSquare currentSquare = _agent.getCurrentSquare();
+		if( currentSquare != null ) {
+			PVector pos = currentSquare._position;
+			fill(255, 0, 0);
+			ellipse(currentSquare._center.x, currentSquare._center.y, 5, 5);
 		}
 	}
 
@@ -94,6 +114,14 @@ public class Search2DApp extends PApplet {
 	@Override
 	public void mouseReleased() {
 		super.mouseReleased();
+		
+		for (GridSquare square : _gridModel.get_gridSquareList()) {
+			if( square.isPermutable() ) {
+				square._color = 90;
+			}
+		}
+		
+		_agent.setGoal( new State( _gridModel.getSquareAtPixelPosition( mouseX, mouseY), _gridModel) );
 	}
 
 	@Override
@@ -101,13 +129,8 @@ public class Search2DApp extends PApplet {
 		super.keyPressed();
 	}
 
-	//
-	public static void main(String args[]) {
-		PApplet.main(new String[] { "--present", "Search2DApp.Search2DApp" });
-	}
-
 	private static PApplet INSTANCE;
 	public static PApplet getInstance() {
-		return Search2DApp.INSTANCE;
+		return Search2DDepthFirst.INSTANCE;
 	} 
 }

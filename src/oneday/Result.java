@@ -1,3 +1,4 @@
+package oneday;
 
 public class Result {
 	private Action inAction;
