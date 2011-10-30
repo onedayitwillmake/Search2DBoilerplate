@@ -4,7 +4,7 @@ import processing.core.*;
 
 public class Search2DApp extends PApplet {
 	private static final long serialVersionUID = -3824555102005090780L;
-	private static int RESOLUTION = 300;
+	private static int RESOLUTION = 60;
 	
 	private float _elapsedFrames;
 	
@@ -21,30 +21,86 @@ public class Search2DApp extends PApplet {
 		noStroke();
 		noSmooth();
 
-		_gridModel = new GridModel(width, height, width / RESOLUTION, this);
-		
-		GridSquare initialState = _gridModel.getSquareAtGridPosition(0, 0);
+
+        int[][] board = {
+				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1 },
+				{ 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1 },
+				{ 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0 },
+				{ 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+				{ 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1 },
+				{ 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0 },
+				{ 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },
+				{ 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+				};
+        
+
+
+        int squareSize = 20;
+        _gridModel = new GridModel(board[0].length, board.length, squareSize, this);
+        
+        // Use board[][] array to create pacman level
+        for(int x = 0; x < board.length; ++x){
+        	for(int y = 0; y < board[x].length; ++y) {
+        		GridSquare square = _gridModel.getSquareAtGridPosition(y, x);
+        		
+
+    			square.setPermutable( true );
+    			square._color = 128;
+    			
+    			
+    			if( board[x][y] == 1) {
+    				square.setPermutable( false );
+    				square._color = 0;
+    			}
+        	}
+        }
+        
+        // Resize the app to the size of the pacman board
+        // The delay is due to incorrect re-sizing by eclipse on app start
+        delay(1000);
+        size( board[0].length * squareSize, board.length * squareSize );
+        
+        
+        GridSquare initialState = _gridModel.getSquareAtGridPosition(14, 25);
 		initialState._color = 255;
 		
-		GridSquare goalSquare = _gridModel.getSquareAtPixelPosition( width / 2, height / 2 );
-		goalSquare._color = 128;
-		
-		// Randomly make some not passable
-		for (GridSquare square : _gridModel.get_gridSquareList()) {
-			if( random(1) < 0.25 && square != goalSquare && square != initialState ) {
-				square.setPermutable( false );
-				square._color = 0;
-			}
-		}
-		
-		_agent = new Agent( new State(initialState, _gridModel), new State(goalSquare, _gridModel), _gridModel );
+		GridSquare goalState = _gridModel.getSquareAtGridPosition(14, 15);		
+		_agent = new Agent( new State(initialState, _gridModel), new State(goalState, _gridModel), _gridModel );
 	}
 
 	public void update() {
 		++_elapsedFrames;
 		
-		for(int i = 0; i < 1000; i++ ) {
-			_agent.advance();		
+		if( _agent != null ) {
+			for(int i = 0; i < 1; i++ ) {
+				_agent.advance();		
+			}
 		}
 	}
 	
@@ -55,16 +111,17 @@ public class Search2DApp extends PApplet {
 		
 		background(255);
 		stroke( 128 );
+		rectMode(CORNERS);
 		for (GridSquare square : _gridModel.get_gridSquareList()) {
-			square.draw();
+			square.draw(); 
 		}
 		
-		GridSquare currentSquare = _agent.getCurrentSquare();
-		if( currentSquare != null ) {
-			PVector pos = currentSquare._position;
-			fill(255, 0, 0);
-			ellipse(currentSquare._center.x, currentSquare._center.y, 5, 5);
-		}
+//		GridSquare currentSquare = _agent.getCurrentSquare();
+//		if( currentSquare != null ) {
+//			PVector pos = currentSquare._position;
+//			fill(255, 0, 0);
+//			ellipse(currentSquare._center.x, currentSquare._center.y, 5, 5);
+//		}
 	}
 
 	/*

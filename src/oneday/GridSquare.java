@@ -22,14 +22,14 @@ public class GridSquare {
 		_gridPosition = new PVector(row, column);
 		_size = size;
 		_center = new PVector(_position.x + _size/2, _position.y + _size/2);
-		_color = 90;
+		_color = 225;
 		_isPermutable = true;
 		app = appRef;
 	}	
 	
 	public void draw() {
 		app.fill( _color );
-		app.rect(_position.x, _position.y, _position.x+_size, _position.y+_size);
+		app.rect(_position.x, _position.y, _position.x+_size, _position.y + _size);
 	}
 
 	public void setPermutable(boolean isPermutable) { _isPermutable = isPermutable; }
