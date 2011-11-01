@@ -15,7 +15,7 @@ import processing.core.*;
 
 public class Search2DDepthFirst extends PApplet {
 	private static final long serialVersionUID = -3824555102005090780L;
-	private static int RESOLUTION = 50;
+	private static int RESOLUTION = 30;
 	
 	private float _elapsedFrames;
 	
@@ -30,6 +30,8 @@ public class Search2DDepthFirst extends PApplet {
 		background(0);
 		noStroke();
 		noSmooth();
+		
+		
 
 		_gridModel = new GridModel(width, height, width / RESOLUTION, this);
 		
@@ -53,7 +55,7 @@ public class Search2DDepthFirst extends PApplet {
 	public void update() {
 		++_elapsedFrames;
 		
-		for(int i = 0; i < 10; i++ ) {
+		for(int i = 0; i < 1; i++ ) {
 			_agent.advance();
 		}
 	}

@@ -16,10 +16,10 @@ public class GridModel {
 
 	private int _squareSize;
 	private int _gridColumnCount;
-	private int _gridRowCount;
 
 	// Reference to Processing
 	private PApplet app;
+	private int _gridRowCount;
 
 	public GridModel(int width, int height, int squareSize, PApplet appRef) {
 		app = appRef;
@@ -44,6 +44,8 @@ public class GridModel {
 				_gridSquareList.add( _gridSquares[i][j] );
 			}
 		}
+		
+		
 	}
 
 	/**
