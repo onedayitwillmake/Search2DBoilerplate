@@ -11,22 +11,22 @@ import processing.core.PImage;
  * 
  */
 public class GridModel {
-	private GridSquare[][] _gridSquares;
+	public GridSquare[][] _gridSquares;
 	private ArrayList<GridSquare> _gridSquareList;
 
 	private int _squareSize;
 	private int _gridColumnCount;
+	private int _gridRowCount;
 
 	// Reference to Processing
 	private PApplet app;
-	private int _gridRowCount;
 
-	public GridModel(int width, int height, int squareSize, PApplet appRef) {
+	public GridModel(int aColumnCount, int aRowCount, int squareSize, PApplet appRef) {
 		app = appRef;
 		
 		_squareSize = squareSize;
-		_gridColumnCount = width / _squareSize;
-		_gridRowCount = height / _squareSize;
+		_gridColumnCount = aColumnCount;
+		_gridRowCount = aRowCount;
 
 		_gridSquares = new GridSquare[_gridColumnCount][_gridRowCount];
 		_gridSquareList = new ArrayList<GridSquare>();
@@ -38,14 +38,12 @@ public class GridModel {
 	 * _gridColumnCount/_gridRowCount properties are set
 	 */
 	public void setupSquares() {
-		for (int i = 0; i < _gridColumnCount; i++) {
-			for (int j = 0; j < _gridRowCount; j++) {
+		for (int i = 0; i < _gridColumnCount; ++i) {
+			for (int j = 0; j < _gridRowCount; ++j) {
 				_gridSquares[i][j] = new GridSquare(i * _squareSize, j * _squareSize, i, j, (int) _squareSize, app);
 				_gridSquareList.add( _gridSquares[i][j] );
 			}
 		}
-		
-		
 	}
 
 	/**

@@ -7,10 +7,10 @@ import strategies.comparators.ManhattanDistanceComparator;
 
 public class Agent {
 	
-	private Sequence _sequence;
-	private GridModel _worldState;
-	private State	_initialState;
-	private State	_goal;
+	private Sequence	_sequence;
+	private GridModel	_worldState;
+	private State		_initialState;
+	private State		_goal;
 	
 	private GraphSearch _graph;
 
@@ -31,12 +31,13 @@ public class Agent {
 
 	/**
 	 * Advances a single step or like whatever
+	 * // TODO: Implement worlds fastest algorithm ever
 	 */
 	public void advance() {
-		// TODO: Implement worlds fastest algorithm ever
-		
+
+		// Move to whatever the current node is, and check if we're at the goal
 		State currentNode = _sequence.getLastState();
-		if( goalCheck( currentNode ) ) { 
+		if( isAtGoal() ) { 
 			return;
 		}
 		
@@ -46,10 +47,10 @@ public class Agent {
 		_graph.getFrontier().sort( manhattanDistanceComparator );
 	}
 
-	private boolean goalCheck(State aNode) {
-		return _goal.isEqual( aNode );
-	}
-
+	/**
+	 * Returns the square at the top of our sequence, which is where this square is located
+	 * @return
+	 */
 	public GridSquare getCurrentSquare() {
 		if( _sequence.getLastState() != null && _sequence.getLastState().getSquare() != null ) {
 			return _sequence.getLastState().getSquare();
@@ -70,4 +71,6 @@ public class Agent {
 		_goal = aGoal;
 		_graph.clear();
 	}
+	
+	public boolean isAtGoal() { return _goal.isEqual( _sequence.getLastState() ); };
 }

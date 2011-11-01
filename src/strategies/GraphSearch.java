@@ -13,25 +13,29 @@ public class GraphSearch {
 	}
 	
 	public void advance( State currentNode, GridModel worldState, Sequence sequence ) {
-		// DOWN, RIGHT, UP, LEFT
+		// DOWN, LEFT, RIGHT, UP
 		Action[] frontier = {new Action(0, -1), new Action(-1, 0),  new Action(1, 0), new Action(0, 1) };
 		
 		boolean hasValidState = false;
-		// Picks first action from above that is valid
+		
+		// Insert any squares that pass the test, at the frontier
 		for (int i = 0; i < frontier.length; i++) {
 			State aState = frontier[i].execute( currentNode, worldState );
 			
 			if( aState.getSquare() == null ) continue; // Invalid state - 
 			if( _frontier.containsState( aState ) ) continue; // Already in _frontier;
 			if( sequence.containsState( aState ) ) continue; // Already in sequence;
-			if( !aState.getSquare().isPermutable() ) continue;
+			if( !aState.getSquare().isPermutable() ) continue; // Square is not permutable
 						 
 			aState.getSquare()._color = 128;
 			_frontier.insertAtHead( aState );
 		}
 		
+		// If we have a frontier state, remove it from the frontier and add it to the top of the sequence
 		if( _frontier.getLastState() != null ) {
 			sequence.pushState( _frontier.popState() );
+			
+			// Color it to let us know we passed
 			sequence.getLastState().getSquare()._color = 255;
 		}
 	}

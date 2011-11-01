@@ -14,11 +14,16 @@ public class Sequence {
 		_stateSequence = new ArrayList<State>();
 	};
 	
+
+	// Adds a state to the back of the sequence
+	public void pushState( State aState ) { _stateSequence.add( aState ); };
+	// Adds a state to the front of the sequence
 	public void insertAtHead( State aState ) {
 		_stateSequence.add(0, aState);
 	};
 	
-	public void pushState( State aState ) { _stateSequence.add( aState ); };
+	
+	// Removes the last state in the sequence - similar to getLastState but removes it from the sequence
 	public State popState() { 
 		if ( !_stateSequence.isEmpty() ) {
 			return _stateSequence.remove( _stateSequence.size() - 1 );
