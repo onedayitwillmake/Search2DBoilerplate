@@ -1,16 +1,25 @@
 package oneday;
+
+import processing.core.PApplet;
+import processing.core.PVector;
+
 import java.util.ArrayList;
+
+import oneday.Agent;
+import oneday.GridModel;
+import oneday.GridSquare;
+import oneday.State;
 import processing.core.*;
+
 
 public class Search2DApp extends PApplet {
 	private static final long serialVersionUID = -3824555102005090780L;
-	private static int RESOLUTION = 300;
+	private static int RESOLUTION = 30;
 	
 	private float _elapsedFrames;
 	
 	private GridModel _gridModel;
 	private Agent _agent;
-	
 	public void setup() {
 		INSTANCE = this;
 		_elapsedFrames = 0;
@@ -20,6 +29,8 @@ public class Search2DApp extends PApplet {
 		background(0);
 		noStroke();
 		noSmooth();
+		
+		
 
 		_gridModel = new GridModel(width, height, width / RESOLUTION, this);
 		
@@ -43,16 +54,15 @@ public class Search2DApp extends PApplet {
 	public void update() {
 		++_elapsedFrames;
 		
-		for(int i = 0; i < 1000; i++ ) {
-			_agent.advance();		
+		for(int i = 0; i < 1; i++ ) {
+			_agent.advance();
 		}
 	}
 	
 	@SuppressWarnings("unused")
 	public void draw() {
 		update();
-		
-		
+			
 		background(255);
 		stroke( 128 );
 		for (GridSquare square : _gridModel.get_gridSquareList()) {
@@ -105,16 +115,19 @@ public class Search2DApp extends PApplet {
 	@Override
 	public void mouseReleased() {
 		super.mouseReleased();
+		
+		for (GridSquare square : _gridModel.get_gridSquareList()) {
+			if( square.isPermutable() ) {
+				square._color = 90;
+			}
+		}
+		
+		_agent.setGoal( new State( _gridModel.getSquareAtPixelPosition( mouseX, mouseY), _gridModel) );
 	}
 
 	@Override
 	public void keyPressed() {
 		super.keyPressed();
-	}
-
-	//
-	public static void main(String args[]) {
-		PApplet.main(new String[] { "--present", "Search2DApp.Search2DApp" });
 	}
 
 	private static PApplet INSTANCE;
